@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   m4d:
   - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2021-04-27T13:07:08.760563661Z"
+    description: Mesh for Data Helm Chart
+    digest: d60c6664d65fd84007eb3c9f0393fb1b7a99ea03c07dc43d5eeee095a24e8225
+    name: m4d
+    type: application
+    urls:
+    - https://github.com/mesh-for-data/charts/releases/download/m4d-0.1.0/m4d-0.1.0.tgz
+    version: 0.1.0
+  - apiVersion: v2
     appVersion: 0.0.1
     created: "2021-04-26T21:10:37.731890454Z"
     description: Mesh for Data Helm Chart
@@ -13,6 +23,16 @@ entries:
     version: 0.0.1
   m4d-crd:
   - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2021-04-27T13:07:08.89655722Z"
+    description: M4D CustomResourceDefinitions
+    digest: fc6fb72d0700a4e02cd9f0a4383560a0c10736360ffadfb57c74be2b3fe6d29b
+    name: m4d-crd
+    type: application
+    urls:
+    - https://github.com/mesh-for-data/charts/releases/download/m4d-crd-0.1.0/m4d-crd-0.1.0.tgz
+    version: 0.1.0
+  - apiVersion: v2
     appVersion: 0.0.1
     created: "2021-04-26T21:10:37.875615726Z"
     description: M4D CustomResourceDefinitions
@@ -22,4 +42,4 @@ entries:
     urls:
     - https://github.com/mesh-for-data/charts/releases/download/m4d-crd-0.0.1/m4d-crd-0.0.1.tgz
     version: 0.0.1
-generated: "2021-04-26T21:10:37.875625126Z"
+generated: "2021-04-27T13:07:08.89656752Z"
