@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   m4d:
   - apiVersion: v2
+    appVersion: 0.3.1
+    created: "2021-07-12T09:03:59.048076873Z"
+    description: Mesh for Data Helm Chart
+    digest: 89afe0e563107ff25c35a657bfe4f4ed3818c94528b522b06ebf31294787dbc4
+    name: m4d
+    type: application
+    urls:
+    - https://github.com/mesh-for-data/charts/releases/download/m4d-0.3.1/m4d-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v2
     appVersion: 0.3.0
     created: "2021-07-12T05:04:02.919865024Z"
     description: Mesh for Data Helm Chart
@@ -43,6 +53,16 @@ entries:
     version: 0.0.1
   m4d-crd:
   - apiVersion: v2
+    appVersion: 0.3.1
+    created: "2021-07-12T09:03:59.161289576Z"
+    description: M4D CustomResourceDefinitions
+    digest: 30251bab2b80aae9dc3071282d4387eb6ab73949c117c93eab268668a65a90ee
+    name: m4d-crd
+    type: application
+    urls:
+    - https://github.com/mesh-for-data/charts/releases/download/m4d-crd-0.3.1/m4d-crd-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v2
     appVersion: 0.3.0
     created: "2021-07-12T05:04:03.335424932Z"
     description: M4D CustomResourceDefinitions
@@ -82,4 +102,19 @@ entries:
     urls:
     - https://github.com/mesh-for-data/charts/releases/download/m4d-crd-0.0.1/m4d-crd-0.0.1.tgz
     version: 0.0.1
-generated: "2021-07-12T05:04:03.335465434Z"
+  vault:
+  - apiVersion: v2
+    appVersion: 1.6.2
+    created: "2021-07-12T09:03:59.290708665Z"
+    dependencies:
+    - name: vault
+      repository: https://helm.releases.hashicorp.com
+      version: 0.9.1
+    description: Vault Helm Chart
+    digest: d4b8be86c8fcab0f69e2d2a66d1ee673790ba80a4908118f995b6b72b8145dd3
+    name: vault
+    type: application
+    urls:
+    - https://github.com/mesh-for-data/charts/releases/download/vault-0.3.1/vault-0.3.1.tgz
+    version: 0.3.1
+generated: "2021-07-12T09:03:59.290764666Z"
