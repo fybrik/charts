@@ -1,12 +1,12 @@
 # Charts
 
 This repository hosts Mesh for Data [Helm](https://helm.sh/) charts.
-The charts hosted in this repository are mirrors of charts that are maintained in other repositories within the mesh-for-data organization.
+The charts hosted in this repository are mirrors of charts that are maintained in other repositories within the fybrik organization.
 
 ## Add Helm repository
 
 ```bash
-helm repo add m4d https://mesh-for-data.github.io/charts/
+helm repo add fybrik https://fybrik.github.io/charts/
 helm repo update
 ```
 
@@ -41,7 +41,7 @@ jobs:
       - name: Checkout charts repository
         uses: actions/checkout@v2
         with:
-          repository: mesh-for-data/charts
+          repository: fybrik/charts
           path: charts-repo
       - run: |
           rm -rf charts-repo/charts/<chart-name>
