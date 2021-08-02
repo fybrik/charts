@@ -1,5 +1,27 @@
 apiVersion: v1
 entries:
+  fybrik:
+  - apiVersion: v2
+    appVersion: 0.4.0
+    created: "2021-08-02T05:36:36.422292201Z"
+    description: Fybrik Helm Chart
+    digest: 3d2aafc9341f4c9cbcee5cdce91c8143bb6b8cc7a7854d0ef50d6d4eb8355ad7
+    name: fybrik
+    type: application
+    urls:
+    - https://github.com/fybrik/charts/releases/download/fybrik-0.4.0/fybrik-0.4.0.tgz
+    version: 0.4.0
+  fybrik-crd:
+  - apiVersion: v2
+    appVersion: 0.4.0
+    created: "2021-08-02T05:36:36.539012259Z"
+    description: Fybrik CustomResourceDefinitions
+    digest: 6dbd45083d96e9b796f84a35d3be23e0a01788fb4a8b0edca206fade0089ae82
+    name: fybrik-crd
+    type: application
+    urls:
+    - https://github.com/fybrik/charts/releases/download/fybrik-crd-0.4.0/fybrik-crd-0.4.0.tgz
+    version: 0.4.0
   m4d:
   - apiVersion: v2
     appVersion: 0.3.2
@@ -125,6 +147,20 @@ entries:
   vault:
   - apiVersion: v2
     appVersion: 1.6.2
+    created: "2021-08-02T05:36:36.65899214Z"
+    dependencies:
+    - name: vault
+      repository: https://helm.releases.hashicorp.com
+      version: 0.9.1
+    description: Vault Helm Chart
+    digest: a3509568565815b99093a53e6ae703ce5fe788a4d7d88e0d8c6ceb0172ffe963
+    name: vault
+    type: application
+    urls:
+    - https://github.com/fybrik/charts/releases/download/vault-0.4.0/vault-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
+    appVersion: 1.6.2
     created: "2021-07-13T14:32:49.238711537Z"
     dependencies:
     - name: vault
@@ -151,4 +187,4 @@ entries:
     urls:
     - https://github.com/mesh-for-data/charts/releases/download/vault-0.3.1/vault-0.3.1.tgz
     version: 0.3.1
-generated: "2021-07-13T14:32:49.238765342Z"
+generated: "2021-08-02T05:36:36.659404343Z"
