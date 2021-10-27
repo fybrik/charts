@@ -1,9 +1,10 @@
-{{- if include "fybrik.isEnabled" (tuple .Values.manager.enabled (or .Values.coordinator.enabled .Values.worker.enabled)) }}
-{{- if .Values.clusterScoped }}
+{{- if .Values.manager.enabled }}
+{{- if .Values.applicationNamespace}}
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
+kind: Role
 metadata:
-  name: {{ template "fybrik.fullname" . }}-admin-cr
+  name: {{ template "fybrik.fullname" . }}-applications-role
+  namespace: {{ .Values.applicationNamespace }}
 rules:
 - apiGroups:
   - app.fybrik.io
@@ -27,4 +28,3 @@ rules:
   - update
 {{- end }}
 {{- end }}
-
