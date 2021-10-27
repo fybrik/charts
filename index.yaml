@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   fybrik:
   - apiVersion: v2
+    appVersion: 0.5.0
+    created: "2021-10-27T19:17:59.905198428Z"
+    description: Fybrik Helm Chart
+    digest: 5ea62f811602aebf6cfef3675573cf45c63119c6697ab146dd0f6fa53c939641
+    name: fybrik
+    type: application
+    urls:
+    - https://github.com/fybrik/charts/releases/download/fybrik-0.5.0/fybrik-0.5.0.tgz
+    version: 0.5.0
+  - apiVersion: v2
     appVersion: 0.4.1
     created: "2021-08-02T09:46:19.490946655Z"
     description: Fybrik Helm Chart
@@ -22,6 +32,16 @@ entries:
     - https://github.com/fybrik/charts/releases/download/fybrik-0.4.0/fybrik-0.4.0.tgz
     version: 0.4.0
   fybrik-crd:
+  - apiVersion: v2
+    appVersion: 0.5.0
+    created: "2021-10-27T19:18:00.048955615Z"
+    description: Fybrik CustomResourceDefinitions
+    digest: 1ba90aa32aa1471995370ff1d8695020cd4d49631eb7e0703bd8aa1d8123c774
+    name: fybrik-crd
+    type: application
+    urls:
+    - https://github.com/fybrik/charts/releases/download/fybrik-crd-0.5.0/fybrik-crd-0.5.0.tgz
+    version: 0.5.0
   - apiVersion: v2
     appVersion: 0.4.1
     created: "2021-08-02T09:46:19.612508829Z"
@@ -167,6 +187,20 @@ entries:
   vault:
   - apiVersion: v2
     appVersion: 1.6.2
+    created: "2021-10-27T19:18:00.195369631Z"
+    dependencies:
+    - name: vault
+      repository: https://helm.releases.hashicorp.com
+      version: 0.9.1
+    description: Vault Helm Chart
+    digest: 38e623feadd37a9348b9dcac606bf9332f96211e515c474b0516afcfec7c35f0
+    name: vault
+    type: application
+    urls:
+    - https://github.com/fybrik/charts/releases/download/vault-0.5.0/vault-0.5.0.tgz
+    version: 0.5.0
+  - apiVersion: v2
+    appVersion: 1.6.2
     created: "2021-08-02T09:46:19.729938674Z"
     dependencies:
     - name: vault
@@ -221,4 +255,4 @@ entries:
     urls:
     - https://github.com/mesh-for-data/charts/releases/download/vault-0.3.1/vault-0.3.1.tgz
     version: 0.3.1
-generated: "2021-08-02T09:46:19.729994174Z"
+generated: "2021-10-27T19:18:00.195427832Z"
