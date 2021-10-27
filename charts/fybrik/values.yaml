@@ -13,6 +13,15 @@ fullnameOverride: ""
 
 clusterScoped: true
 
+blueprintNamespace: "fybrik-blueprints"
+
+# Set if need to only watch for FybrikApplication from a specific namespace
+# The namespace must already exist
+applicationNamespace: ""
+
+# Taxonomy file for taxonomy ConfigMap
+taxonomyOverride: ""
+
 # Global configuration applies to multiple components installed by this chart
 global:
   # Default hub for Fybrik images.
@@ -60,7 +69,7 @@ coordinator:
 
   # Overrides the policy manager connector URL.
   # Defaults to `<policyManager>-connector:80`.
-  policyManagerConnectorURL: ""
+  policyManagerConnectorURL: "http://opa-connector:80"
 
   # Configure the vault instance to be used by the coordinator manager
   vault:
@@ -163,79 +172,12 @@ manager:
 
   prometheus: false
 
-# OPA connector component
-opaConnector:
-  # Set to true to deploy the opa connector or false to skip its deployment.
-  # Defaults to true if `coordinator.policyManager` is set to "opa"
-  enabled: auto
-
-  # Overrides the URL of the OPA server
-  # Defaults to the address of the deployed OPA server
-  serverURL:
-
-  # Override GRPC connection timeout
-  # See `.global.connectionTimeout`.
-  connectionTimeout:
-
-  # Image name or a hub/image[:tag]
-  image: "opa-connector"
-
-  # Overrides `.global.imagePullPolicy`
-  imagePullPolicy: ""
-
-  # Used if autoscaling is not enabled 
-  replicaCount: 1
-  
-  serviceAccount:
-    # Specifies whether a service account should be created
-    create: true
-    # Annotations to add to the service account
-    annotations: {}
-    # The name of the service account to use
-    name: opa-connector
-
-  podAnnotations: {}
-
-  podSecurityContext: {}
-    # fsGroup: 2000
-
-  securityContext: {}
-    # capabilities:
-    #   drop:
-    #   - ALL
-    # readOnlyRootFilesystem: true
-    # runAsNonRoot: true
-    # runAsUser: 1000
-
-  service:
-    type: ClusterIP
-    port: 80
-
-  resources: {}
-    # We usually recommend not to specify default resources and to leave this as a conscious
-    # choice for the user. This also increases chances charts run on environments with little
-    # resources, such as Minikube. If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
-
-  autoscaling:
-    enabled: false
-    minReplicas: 1
-    maxReplicas: 100
-    targetCPUUtilizationPercentage: 80
-    targetMemoryUtilizationPercentage:
-    # targetMemoryUtilizationPercentage: 80
-
-  nodeSelector: {}
-
-  tolerations: []
-
-  affinity: {}
+  chartVolume: ""
+    # Specify a persistent volume claim, to be mounted by the manager, that can contain
+    # helm charts that can be referenced by a FybrikModule.  Manager will check if a chart
+    # is available on volume first, then try to pull from a Docker registry if it does not exist.
+    # To populate the volume, create a 'charts' directory at the root of the mount,
+    # and place helm charts within the charts directory.
 
 # OPA server component
 opaServer:
@@ -312,6 +254,17 @@ opaServer:
 
   affinity: {}
 
+  # Bootstrap policies to load upon startup
+  # Define policies in the form of:
+  # <policyName> : |-
+  #   <regoBody>
+  # For example, to mask the entire input body in the decision logs:
+  # bootstrapPolicies:
+  #   log: |-
+  #     package system.log
+  #     mask["/input"]
+  bootstrapPolicies: {}
+
 # Katalog connector component
 katalogConnector:
   # Set to true to deploy the katalog connector or false to skip its deployment.
@@ -378,25 +331,24 @@ katalogConnector:
 
   affinity: {}
 
-# Egeria connector component
-egeriaConnector:
-  # Set to true to deploy the egeria connector or false to skip its deployment.
-  # Defaults to true if `coordinator.catalog` is set to "egeria"
+# V2 OPA connector component
+opaConnector:
+  # Set to true to deploy the opa connector or false to skip its deployment.
+  # Defaults to true if `coordinator.policyManager` is set to "opa"
   enabled: auto
 
-  # Set to the URL of the Egeria API.
-  serverURL: "https://egeria-platform.egeria-catalog:9443"
-
-  # Default username for Egeria
-  username: "garygeeke"
+  # Overrides the URL of the OPA server
+  # Defaults to the address of the deployed OPA server
+  serverURL:
 
   # Override GRPC connection timeout
-  connectionTimeout: 
+  # See `.global.connectionTimeout`.
+  connectionTimeout:
 
   # Image name or a hub/image[:tag]
-  image: "egr-connector"
+  image: "opa-connector"
 
-  # Overrides global.imagePullPolicy
+  # Overrides `.global.imagePullPolicy`
   imagePullPolicy: ""
 
   # Used if autoscaling is not enabled 
@@ -408,7 +360,7 @@ egeriaConnector:
     # Annotations to add to the service account
     annotations: {}
     # The name of the service account to use
-    name: egeria-connector
+    name: opa-connector
 
   podAnnotations: {}
 
@@ -452,3 +404,7 @@ egeriaConnector:
   tolerations: []
 
   affinity: {}
+  
+# S3 mock service installed in fybrik namespace
+s3mock:
+  enabled: false

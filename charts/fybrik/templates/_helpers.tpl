@@ -64,6 +64,14 @@ Create the value of an image field from hub, image and tag
 {{- end }}
 
 {{/*
+Extract the file name from a path
+*/}}
+{{- define "fybrik.opaServerPolicyFileName" -}}
+{{- $path := toString (first .) -}}
+{{- printf "%s" $path | base| toString }}
+{{- end }}
+
+{{/*
 isEnabled evaluates an enabled flag that might be set to "auto".
 Returns true if one of the following is true:
 The return value when using `include` is always a String.
@@ -99,3 +107,15 @@ certmanager.k8s.io/v1alpha1
 cert-manager.io/v1alpha2
 {{- end -}}
 {{- end -}}
+
+{{/*
+Get blueprints namespace
+*/}}
+{{- define "fybrik.getBlueprintNamespace" -}}
+{{- if .Values.blueprintNamespace -}}
+{{- .Values.blueprintNamespace -}}
+{{- else -}}
+{{- "fybrik-blueprints" -}}
+{{- end -}}
+{{- end -}}
+

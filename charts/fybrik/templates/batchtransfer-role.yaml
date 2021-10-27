@@ -1,16 +1,13 @@
 {{- if .Values.worker.enabled }}
-{{- if .Values.clusterScoped }}
-# ClusterRole streamtransfer-editor allows managing streamtransfers
-kind: ClusterRole
+kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: streamtransfer-editor
+  name: batchtransfer-editor
 rules:
 - apiGroups: ["motion.fybrik.io"]
-  resources: ["streamtransfers", "streamtransfers/finalizers"]
+  resources: ["batchtransfers", "batchtransfers/finalizers"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 - apiGroups: ["motion.fybrik.io"]
-  resources: ["streamtransfers/status"]
+  resources: ["batchtransfers/status"]
   verbs: ["get", "update", "patch"]
-{{- end }}
 {{- end }}
