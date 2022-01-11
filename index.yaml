@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   fybrik:
   - apiVersion: v2
+    appVersion: 0.6.0
+    created: "2022-01-11T11:27:20.865618602Z"
+    description: Fybrik Helm Chart
+    digest: 0cf6d0e75b6237f8a7475a57cd6255de408e9ce8caa22ab44540bc6a17dd1a6b
+    name: fybrik
+    type: application
+    urls:
+    - https://github.com/fybrik/charts/releases/download/fybrik-0.6.0/fybrik-0.6.0.tgz
+    version: 0.6.0
+  - apiVersion: v2
     appVersion: 0.5.3
     created: "2022-01-11T11:16:51.098371468Z"
     description: Fybrik Helm Chart
@@ -62,6 +72,16 @@ entries:
     - https://github.com/fybrik/charts/releases/download/fybrik-0.4.0/fybrik-0.4.0.tgz
     version: 0.4.0
   fybrik-crd:
+  - apiVersion: v2
+    appVersion: 0.6.0
+    created: "2022-01-11T11:27:21.028363137Z"
+    description: Fybrik CustomResourceDefinitions
+    digest: bedb211777aff37ce531491e81c7807973a5fa6f929fe36deb4c3a14476c2319
+    name: fybrik-crd
+    type: application
+    urls:
+    - https://github.com/fybrik/charts/releases/download/fybrik-crd-0.6.0/fybrik-crd-0.6.0.tgz
+    version: 0.6.0
   - apiVersion: v2
     appVersion: 0.5.3
     created: "2022-01-11T11:16:51.303371563Z"
@@ -247,6 +267,20 @@ entries:
   vault:
   - apiVersion: v2
     appVersion: 1.6.2
+    created: "2022-01-11T11:27:21.182849471Z"
+    dependencies:
+    - name: vault
+      repository: https://helm.releases.hashicorp.com
+      version: 0.9.1
+    description: Vault Helm Chart
+    digest: cd41c17411e25cac03caf9055f4dfcff73160cfb9e7267d4804be17e418407b9
+    name: vault
+    type: application
+    urls:
+    - https://github.com/fybrik/charts/releases/download/vault-0.6.0/vault-0.6.0.tgz
+    version: 0.6.0
+  - apiVersion: v2
+    appVersion: 1.6.2
     created: "2022-01-11T11:16:51.504586928Z"
     dependencies:
     - name: vault
@@ -357,4 +391,4 @@ entries:
     urls:
     - https://github.com/mesh-for-data/charts/releases/download/vault-0.3.1/vault-0.3.1.tgz
     version: 0.3.1
-generated: "2022-01-11T11:16:51.504720229Z"
+generated: "2022-01-11T11:27:21.182990776Z"
