@@ -23,6 +23,16 @@ entries:
     - https://github.com/fybrik/charts/releases/download/fybrik-0.7.0/fybrik-0.7.0.tgz
     version: 0.7.0
   - apiVersion: v2
+    appVersion: 0.6.8
+    created: "2022-06-27T06:53:11.734441986Z"
+    description: Fybrik Helm Chart
+    digest: cf726fddc1763e8e43e7c9fecca1dd6a17762803d3ae1fe640e47300770b2ead
+    name: fybrik
+    type: application
+    urls:
+    - https://github.com/fybrik/charts/releases/download/fybrik-0.6.8/fybrik-0.6.8.tgz
+    version: 0.6.8
+  - apiVersion: v2
     appVersion: 0.6.6
     created: "2022-04-27T08:39:51.922587286Z"
     description: Fybrik Helm Chart
@@ -158,6 +168,21 @@ entries:
     urls:
     - https://github.com/fybrik/charts/releases/download/fybrik-crd-0.7.0/fybrik-crd-0.7.0.tgz
     version: 0.7.0
+  - apiVersion: v2
+    appVersion: 0.6.8
+    created: "2022-06-27T06:53:11.846912538Z"
+    dependencies:
+    - condition: asset-crd.enabled
+      name: asset-crd
+      repository: ""
+      version: 0.6.8
+    description: Fybrik CustomResourceDefinitions
+    digest: 807966f9ea37dcdf4644be232b037f3f40ff6a7b56a31eb5ca4a134d59b01069
+    name: fybrik-crd
+    type: application
+    urls:
+    - https://github.com/fybrik/charts/releases/download/fybrik-crd-0.6.8/fybrik-crd-0.6.8.tgz
+    version: 0.6.8
   - apiVersion: v2
     appVersion: 0.6.6
     created: "2022-04-27T08:39:52.080818147Z"
@@ -442,6 +467,20 @@ entries:
     version: 0.7.0
   - apiVersion: v2
     appVersion: 1.6.2
+    created: "2022-06-27T06:53:11.987224401Z"
+    dependencies:
+    - name: vault
+      repository: https://helm.releases.hashicorp.com
+      version: 0.9.1
+    description: Vault Helm Chart
+    digest: 76958cdd52c1b510b4f4ebc97255f0289ae61e8c59bae019181d70633d738794
+    name: vault
+    type: application
+    urls:
+    - https://github.com/fybrik/charts/releases/download/vault-0.6.8/vault-0.6.8.tgz
+    version: 0.6.8
+  - apiVersion: v2
+    appVersion: 1.6.2
     created: "2022-04-27T08:39:52.238464603Z"
     dependencies:
     - name: vault
@@ -636,4 +675,4 @@ entries:
     urls:
     - https://github.com/mesh-for-data/charts/releases/download/vault-0.3.1/vault-0.3.1.tgz
     version: 0.3.1
-generated: "2022-06-02T16:50:35.658239396Z"
+generated: "2022-06-27T06:53:11.987591503Z"
