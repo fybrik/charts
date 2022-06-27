@@ -32,11 +32,11 @@ spec:
       {{- end }}
       serviceAccountName: {{ .Values.opaConnector.serviceAccount.name }}
       securityContext:
-      {{- include "fybrik.processPodSecurityContext" (dict "context" . "podSecurityContext" .Values.opaConnector.podSecurityContext) | nindent 8 }}
+        {{- toYaml .Values.opaConnector.podSecurityContext | nindent 8 }}
       containers:
         - name: opa-connector
           securityContext:
-            {{- mergeOverwrite (deepCopy .Values.global.containerSecurityContext) .Values.opaConnector.containerSecurityContext | toYaml | nindent 12 }}
+            {{- toYaml .Values.opaConnector.securityContext | nindent 12 }}
           image: {{ include "fybrik.image" ( tuple $ .Values.opaConnector ) }}
           imagePullPolicy: {{ .Values.opaConnector.imagePullPolicy | default .Values.global.imagePullPolicy }}
           ports:
