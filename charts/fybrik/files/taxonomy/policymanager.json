@@ -43,7 +43,7 @@
       ],
       "properties": {
         "actionType": {
-          "$ref": "taxonomy.json#/definitions/DataFlow"
+          "$ref": "#/definitions/RequestActionType"
         },
         "destination": {
           "type": "string"
@@ -52,6 +52,14 @@
           "$ref": "taxonomy.json#/definitions/ProcessingLocation"
         }
       }
+    },
+    "RequestActionType": {
+      "type": "string",
+      "enum": [
+        "read",
+        "write",
+        "delete"
+      ]
     },
     "Resource": {
       "type": "object",

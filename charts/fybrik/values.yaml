@@ -6,22 +6,16 @@
 nameOverride: ""
 fullnameOverride: ""
 
-# If Fybrik should not create cluster scope resources, set it to false.
+# Set to false to disable deploying cluster scoped resources.
 # Note that these resources are still required for a valid
 # deployment. Only set this to false if you deployed cluster
 # scoped resources using a different method.
+
 clusterScoped: true
 
-# The namespace where Fybrik deploys data path components (modules)
-modulesNamespace:
-  # The Fybrik namespace name, if not defined, default "fybrik-blueprints" is used
-  name: ""
-  # if it is true, Fybrik, during its deployment, creates this namespace and removes it when Fybrik is uninstalled.
-  # Otherwise, it is a user responsibility to create this namespace, before Fybrik deployment.
-  managedByFybrik: true
+modulesNamespace: "fybrik-blueprints"
 
-# Define a specific namespace, if Fybrik should watch for FybrikApplication from a specific namespace only,
-#  or when we work with "clusterScope:false"
+# Set if need to only watch for FybrikApplication from a specific namespace
 # The namespace must already exist
 applicationNamespace: ""
 
@@ -37,9 +31,9 @@ global:
   # If no value is set, the chart's appVersion will be used.
   tag: ""
   # Default image pull policy for Fybrik images
-  # Default behavior: Always.
+  # Default behavior: latest images will be Always else IfNotPresent.
   # ref: https://kubernetes.io/docs/concepts/containers/images/#updating-images
-  imagePullPolicy: "Always"
+  imagePullPolicy: ""
   # Reference to one or more secrets to be used when pulling images.
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
   imagePullSecrets: []
@@ -50,26 +44,6 @@ global:
   # zerolog verbosity level 
   # ref: https://github.com/rs/zerolog#leveled-logging
   loggingVerbosity: -1
-  # Pod Security Context. This is the default setting for all pods, and can be
-  # overwritten by a specific podSecurityContext settings.
-  # ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#security-context
-  podSecurityContext:
-    runAsNonRoot: true
-    # Ignored on openshift. It can be set in a specific podSecurityContext settings.
-    runAsUser: 10001
-    # Ignored on openshift. It can be set in a specific podSecurityContext settings.
-    seccompProfile:
-      type: RuntimeDefault
-  # Container Security Context. This is the default setting for all containers, and can be
-  # overwritten by a specific containerSecurityContext settings.
-  # ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#security-context-1
-  containerSecurityContext:
-    readOnlyRootFilesystem: true
-    privileged: false
-    allowPrivilegeEscalation: false
-    capabilities:
-      drop:
-      - ALL
 
 # Cluster metadata values
 cluster:
@@ -92,8 +66,7 @@ coordinator:
   catalog: "katalog"
 
   # Overrides the catalog connector URL.
-  # Defaults to `http://<catalog>-connector:8080`.
-  # For tls connection use: "https://<catalog>-connector:8443"
+  # Defaults to `http://<catalog>-connector:80`.
   catalogConnectorURL: ""
 
   # Configures the policy manager system name to be used by the coordinator manager.
@@ -101,8 +74,7 @@ coordinator:
   policyManager: "opa"
 
   # Overrides the policy manager connector URL.
-  # Defaults to `http://<policyManager>-connector:8080`.
-  # For tls connection use: "https://<policyManager>-connector:8443"
+  # Defaults to `http://<policyManager>-connector:80`.
   policyManagerConnectorURL: ""
 
   # Configure the vault instance to be used by the coordinator manager
@@ -165,27 +137,6 @@ manager:
   # Overrides arguments to be passed to manager container
   overrideArgs:
 
-  tls:
-    # Relavent if the connection between the manager and one of the connectors
-    # uses tls.
-    certs:
-      # Name of kubernetes secret that holds the manager certificate.
-      # The secret should be of `kubernetes.io/tls` type.
-      # certSecretName: "test-tls-manager-certs"
-      certSecretName: ""
-      # Name of kubernetes tls secret namespace that holds the manager certificate.
-      # The secret should be of `kubernetes.io/tls` type.
-      # certSecretNamespace: "fybrik-system"
-      certSecretNamespace: ""
-      # Name of kubernetes secret that holds the certificate authority (CA) certificates
-      # which are used by the manager to validate the connection to the connectors.
-      # cacertSecretName: "test-tls-ca-certs"
-      cacertSecretName: ""
-      # Name of kubernetes secret namespace that holds the certificate authority (CA)
-      # certificates which are used by the manager to validate the connection to the connectors.
-      # cacertSecretNamespace: "fybrik-system"
-      cacertSecretNamespace: ""
-
   # Extra environment variables to be set for manager container
   extraEnvs:
   # - name: env_name
@@ -203,15 +154,16 @@ manager:
 
   podAnnotations: {}
 
-  # Pod Security Context. If set, the fields of podSecurityContext override
-  # the equivalent fields of .Values.global.podSecurityContext.
-  # ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#security-context
   podSecurityContext: {}
+    # fsGroup: 2000
 
-  # Container Security Context. If set, the fields of containerSecurityContext override
-  # the equivalent fields of .Values.global.containerSecurityContext.
-  # ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#security-context-1
-  containerSecurityContext: {}
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
 
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
@@ -233,20 +185,12 @@ manager:
 
   prometheus: false
 
-  # CSP solver for data plane optimization
-  solver:
-    # image of the container with solver binary and libs
-    # when specified, the solver will be deployed in the manager pod
-    image: "ghcr.io/fybrik/optimizer:0.0.1"
-    # Set to true to enable the use of the solver by Fybrik
-    enabled: false
-
-  # Specify a persistent volume claim, to be mounted by the manager, that can contain
-  # helm charts that can be referenced by a FybrikModule.  Manager will check if a chart
-  # is available on volume first, then try to pull from a Docker registry if it does not exist.
-  # To populate the volume, create a 'charts' directory at the root of the mount,
-  # and place helm charts within the charts directory.
-  chartsPersistentVolumeClaim: ""
+  chartVolume: ""
+    # Specify a persistent volume claim, to be mounted by the manager, that can contain
+    # helm charts that can be referenced by a FybrikModule.  Manager will check if a chart
+    # is available on volume first, then try to pull from a Docker registry if it does not exist.
+    # To populate the volume, create a 'charts' directory at the root of the mount,
+    # and place helm charts within the charts directory.
 
 # OPA server component
 opaServer:
@@ -258,7 +202,7 @@ opaServer:
   image: "openpolicyagent/opa:0.36.0"
   
   # Overrides global.imagePullPolicy
-  imagePullPolicy: "Always"
+  imagePullPolicy: ""
 
   args:
   - "run"
@@ -282,15 +226,16 @@ opaServer:
 
   podAnnotations: {}
 
-  # Pod Security Context. If set, the fields of podSecurityContext override
-  # the equivalent fields of .Values.global.podSecurityContext.
-  # ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#security-context
   podSecurityContext: {}
+    # fsGroup: 2000
 
-  # Container Security Context. If set, the fields of containerSecurityContext override
-  # the equivalent fields of .Values.global.containerSecurityContext.
-  # ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#security-context-1
-  containerSecurityContext: {}
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
 
   service:
     type: ClusterIP
@@ -345,7 +290,7 @@ katalogConnector:
   image: "katalog-connector"
 
   # Overrides global.imagePullPolicy
-  imagePullPolicy: "Always"
+  imagePullPolicy: ""
 
   # Used if autoscaling is not enabled 
   replicaCount: 1
@@ -358,45 +303,22 @@ katalogConnector:
     # The name of the service account to use
     name: katalog-connector
 
-  tls:
-    # Specifies whether the katalog connector communication should use tls.
-    use_tls: false
-    # Specifies whether the katalog connector communication should use mutual tls.
-    use_mtls: false
-    certs:
-      # Name of kubernetes tls secret that holds the katalog-connector certificates.
-      # The secret should be of `kubernetes.io/tls` type.
-      # Relavent if tls is used.
-      # certSecretName: "test-tls-katalog-connector-certs"
-      certSecretName: ""
-      # Name of kubernetes tls secret namespace that holds the katalog-connector certificate.
-      # certSecretNamespace: "fybrik-system"
-      certSecretNamespace: ""
-      # Name of kubernetes secret that holds the certificate authority (CA) certificate which is used
-      # by katalog-connector to validate the connection to the manager if mtls is enabled.
-      # cacertSecretName: "test-tls-ca-certs"
-      cacertSecretName: ""
-      # Name of kubernetes secret namespace that holds the certificate authority (CA) certificate which
-      # is used by the server to validate the connection to the client if mtls is enabled.
-      # cacertSecretNamespace: "fybrik-system"
-      cacertSecretNamespace: ""
-
   podAnnotations: {}
 
-  # Pod Security Context. If set, the fields of podSecurityContext override
-  # the equivalent fields of .Values.global.podSecurityContext.
-  # ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#security-context
   podSecurityContext: {}
+    # fsGroup: 2000
 
-  # Container Security Context. If set, the fields of containerSecurityContext override
-  # the equivalent fields of .Values.global.containerSecurityContext.
-  # ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#security-context-1
-  containerSecurityContext: {}
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
 
   service:
     type: ClusterIP
-    # For tls connection use port 8443
-    port: 8080
+    port: 80
 
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
@@ -434,11 +356,15 @@ opaConnector:
   # Defaults to the address of the deployed OPA server
   serverURL:
 
+  # Override GRPC connection timeout
+  # See `.global.connectionTimeout`.
+  connectionTimeout:
+
   # Image name or a hub/image[:tag]
   image: "opa-connector"
 
   # Overrides `.global.imagePullPolicy`
-  imagePullPolicy: "Always"
+  imagePullPolicy: ""
 
   # Used if autoscaling is not enabled 
   replicaCount: 1
@@ -451,47 +377,22 @@ opaConnector:
     # The name of the service account to use
     name: opa-connector
 
-  tls:
-    # Specifies whether the opa connector communication should use tls.
-    use_tls: false
-    # Specifies whether the opa connector communication should use mutual tls.
-    use_mtls: false
-    # Relavent if the connection between the manager and the connectors
-    # uses tls.
-    certs:
-      # Name of kubernetes tls secret that holds opa-connector certificates.
-      # The secret should be of `kubernetes.io/tls` type.
-      # Relavent if tls is used.
-      # certSecretName: "test-tls-opa-connector-certs"
-      certSecretName: ""
-      # Name of kubernetes tls secret namespace that holds opa-connector certificate.
-      # certSecretNamespace: "fybrik-system"
-      certSecretNamespace: ""
-      # Name of kubernetes secret that holds the certificate authority (CA) certificate which is used
-      # by opa-connector to validate the connection to the manager if mtls is enabled.
-      # cacertSecretName: "test-tls-ca-certs"
-      cacertSecretName: ""
-      # Name of kubernetes secret namespace that holds the certificate authority (CA) certificate which
-      # is used by opa-connector to validate the connection to the manager if mtls is enabled.
-      # cacertSecretNamespace: "fybrik-system"
-      cacertSecretNamespace: ""
-
   podAnnotations: {}
 
-  # Pod Security Context. If set, the fields of podSecurityContext override
-  # the equivalent fields of .Values.global.podSecurityContext.
-  # ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#security-context
   podSecurityContext: {}
+    # fsGroup: 2000
 
-  # Container Security Context. If set, the fields of containerSecurityContext override
-  # the equivalent fields of .Values.global.containerSecurityContext.
-  # ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#security-context-1
-  containerSecurityContext: {}
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
 
   service:
     type: ClusterIP
-    # For tls connection use port 8443
-    port: 8080
+    port: 80
 
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
