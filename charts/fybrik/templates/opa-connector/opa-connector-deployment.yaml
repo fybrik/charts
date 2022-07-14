@@ -32,17 +32,32 @@ spec:
       {{- end }}
       serviceAccountName: {{ .Values.opaConnector.serviceAccount.name }}
       securityContext:
-        {{- toYaml .Values.opaConnector.podSecurityContext | nindent 8 }}
+      {{- include "fybrik.processPodSecurityContext" (dict "context" . "podSecurityContext" .Values.opaConnector.podSecurityContext) | nindent 8 }}
       containers:
         - name: opa-connector
           securityContext:
-            {{- toYaml .Values.opaConnector.securityContext | nindent 12 }}
+            {{- mergeOverwrite (deepCopy .Values.global.containerSecurityContext) .Values.opaConnector.containerSecurityContext | toYaml | nindent 12 }}
           image: {{ include "fybrik.image" ( tuple $ .Values.opaConnector ) }}
           imagePullPolicy: {{ .Values.opaConnector.imagePullPolicy | default .Values.global.imagePullPolicy }}
           ports:
             - name: http
               containerPort: 8080
               protocol: TCP
+          env:
+            - name: SERVICE_PORT
+              value: {{ .Values.opaConnector.service.port | quote }}
+            - name: USE_TLS
+              value: {{ .Values.opaConnector.tls.use_tls | quote | toString }}
+            - name: USE_MTLS
+              value: {{ .Values.opaConnector.tls.use_mtls | quote | toString }}
+            - name: CERT_SECRET_NAME
+              value: {{ .Values.opaConnector.tls.certs.certSecretName }}
+            - name: CERT_SECRET_NAMESPACE
+              value: {{ .Values.opaConnector.tls.certs.certSecretNamespace }}
+            - name: CACERT_SECRET_NAME
+              value: {{ .Values.opaConnector.tls.certs.cacertSecretName }}
+            - name: CACERT_SECRET_NAMESPACE
+              value: {{ .Values.opaConnector.tls.certs.cacertSecretNamespace }}
           envFrom:
             - configMapRef:
                 name: opa-connector-config
