@@ -13,6 +13,16 @@ entries:
     version: 0.7.0
   fybrik:
   - apiVersion: v2
+    appVersion: 1.0.1
+    created: "2022-08-03T12:38:28.557358407Z"
+    description: Fybrik Helm Chart
+    digest: 36faf33b19739d0c5036e6b0433dcb8b8566adde57d2ddbc0ca3202e04b923e8
+    name: fybrik
+    type: application
+    urls:
+    - https://github.com/fybrik/charts/releases/download/fybrik-1.0.1/fybrik-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
     appVersion: 1.0.0
     created: "2022-07-21T11:13:50.049938555Z"
     description: Fybrik Helm Chart
@@ -163,6 +173,21 @@ entries:
     - https://github.com/fybrik/charts/releases/download/fybrik-0.4.0/fybrik-0.4.0.tgz
     version: 0.4.0
   fybrik-crd:
+  - apiVersion: v2
+    appVersion: 1.0.1
+    created: "2022-08-03T12:38:28.710314958Z"
+    dependencies:
+    - condition: asset-crd.enabled
+      name: asset-crd
+      repository: ""
+      version: 1.0.1
+    description: Fybrik CustomResourceDefinitions
+    digest: 8bb33bbe96185596dcebcab7c3232c972514f18797b2cfd15959d6ad777251f6
+    name: fybrik-crd
+    type: application
+    urls:
+    - https://github.com/fybrik/charts/releases/download/fybrik-crd-1.0.1/fybrik-crd-1.0.1.tgz
+    version: 1.0.1
   - apiVersion: v2
     appVersion: 1.0.0
     created: "2022-07-21T11:13:50.200133948Z"
@@ -478,6 +503,20 @@ entries:
   vault:
   - apiVersion: v2
     appVersion: 1.9.2
+    created: "2022-08-03T12:38:28.878251989Z"
+    dependencies:
+    - name: vault
+      repository: https://helm.releases.hashicorp.com
+      version: 0.19.0
+    description: Vault Helm Chart
+    digest: c88e940dab546c7ca630b9dafb8de2e728d524d84452f51b0dce239911b4dc2c
+    name: vault
+    type: application
+    urls:
+    - https://github.com/fybrik/charts/releases/download/vault-1.0.1/vault-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
+    appVersion: 1.9.2
     created: "2022-07-21T11:13:50.353571635Z"
     dependencies:
     - name: vault
@@ -714,4 +753,4 @@ entries:
     urls:
     - https://github.com/mesh-for-data/charts/releases/download/vault-0.3.1/vault-0.3.1.tgz
     version: 0.3.1
-generated: "2022-07-21T11:13:50.353901994Z"
+generated: "2022-08-03T12:38:28.878624996Z"
