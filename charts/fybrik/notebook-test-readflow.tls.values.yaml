@@ -2,7 +2,8 @@
 # This is a YAML-formatted file.
 # It overrides values that are different from the default values.yaml
 # The values used for testing read flow where the manager and connectors
-# uses tls connection. In addition, OPA server is configured to use tls.
+# uses mutual tls connection. In addition, OPA and Vault servers are configured to use
+# mutual tls.
 
 # Global configuration applies to multiple components installed by this chart
 global:
@@ -18,6 +19,9 @@ global:
 coordinator:
   catalogConnectorURL: https://katalog-connector:8443
   policyManagerConnectorURL: https://opa-connector:8443
+  vault:
+    # Vault is configured to use TLS.
+    address: "https://vault.fybrik-system:8200"
 
 # Manager component
 manager:
@@ -41,6 +45,7 @@ katalogConnector:
       cacertSecretName: "test-tls-ca-certs"
 
 opaConnector:
+  # OPA server is configured to use mutual TLS.
   serverURL: https://opa:8443
   tls:
     use_tls: true
@@ -59,6 +64,16 @@ opaServer:
       certSecretName: "test-tls-opa-server-certs"
       cacertSecretName: "test-tls-ca-certs"
 
+  # In OPA server, liveness is defined by HTTPS request when using mtls
+  # which means that certificates verification is required
+  # between kubelet (the client) and OPA server.
+  # Avoid configurating kubelet by setting enabled to false.
+  enableLivenessProbe: false
+  # In OPA server, readiness is defined by HTTPS request when using mtls
+  # which means that certificates verification is required
+  # between kubelet (the client) and OPA server.
+  # Avoid configurating kubelet by setting enabled to false.
+  enableReadinessProbe: false
   image: "openpolicyagent/opa:0.36.0-debug"
   args:
   - "run"
