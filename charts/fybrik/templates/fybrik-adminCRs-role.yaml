@@ -1,0 +1,43 @@
+{{- if .Values.manager.enabled }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ template "fybrik.fullname" . }}-admin-crs-role
+{{- if .Values.adminCRsNamespace }}
+  namespace: {{ .Values.adminCRsNamespace }}
+{{- end }}
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - app.fybrik.io
+  resources:
+  - fybrikmodules/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - app.fybrik.io
+  resources:
+  - fybrikstorageaccounts
+  - fybrikmodules
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+{{- end }}

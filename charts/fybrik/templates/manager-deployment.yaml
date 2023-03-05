@@ -68,6 +68,17 @@ spec:
           - containerPort: 8443
             name: https
         {{- end }}
+        {{- if .Values.storageManager.image }}
+        - name: storage-manager
+          image: {{ include "fybrik.image" ( tuple $ .Values.storageManager ) }}
+          imagePullPolicy: {{ .Values.manager.imagePullPolicy | default .Values.global.imagePullPolicy }}
+          ports:
+          - containerPort: {{ .Values.storageManager.serverPort }}
+            name: storage-manager
+          env:
+          - name: SERVER_PORT
+            value: {{ .Values.storageManager.serverPort | quote }}
+        {{- end }}
         - name: manager
           image: {{ include "fybrik.image" ( tuple $ .Values.manager ) }}
           imagePullPolicy: {{ .Values.manager.imagePullPolicy | default .Values.global.imagePullPolicy }}
@@ -118,6 +129,15 @@ spec:
             - name: APPLICATION_NAMESPACE
               value: {{ .Values.applicationNamespace }}
             {{- end }}
+            {{- if .Values.internalCRsNamespace }}
+            - name: INTERNAL_CRS_NAMESPACE
+              value: {{ .Values.internalCRsNamespace }}
+            {{- end }}
+            {{- if .Values.adminCRsNamespace }}
+            - name: ADMIN_CRS_NAMESPACE
+              value: {{ .Values.adminCRsNamespace }}
+            {{- end }}
+
             {{- if .Values.manager.extraEnvs }}
             {{- toYaml .Values.manager.extraEnvs | nindent 12 }}
             {{- end }}
