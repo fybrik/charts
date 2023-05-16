@@ -23,6 +23,16 @@ entries:
     version: 0.7.0
   fybrik:
   - apiVersion: v2
+    appVersion: 1.3.3
+    created: "2023-05-16T09:03:32.773671607Z"
+    description: Fybrik Helm Chart
+    digest: 7c286d9643bbd285e773af4d1eb7611946b7d4bcfb118eac357d08486762cf94
+    name: fybrik
+    type: application
+    urls:
+    - https://github.com/fybrik/charts/releases/download/fybrik-1.3.3/fybrik-1.3.3.tgz
+    version: 1.3.3
+  - apiVersion: v2
     appVersion: 1.3.2
     created: "2023-03-23T10:01:47.401849656Z"
     description: Fybrik Helm Chart
@@ -243,6 +253,21 @@ entries:
     - https://github.com/fybrik/charts/releases/download/fybrik-0.4.0/fybrik-0.4.0.tgz
     version: 0.4.0
   fybrik-crd:
+  - apiVersion: v2
+    appVersion: 1.3.3
+    created: "2023-05-16T09:03:32.914187771Z"
+    dependencies:
+    - condition: asset-crd.enabled
+      name: asset-crd
+      repository: ""
+      version: 1.3.3
+    description: Fybrik CustomResourceDefinitions
+    digest: 97f6f2326ff9edb765b52e8c5e963513961a62d7b81951da340a4f913f0bd398
+    name: fybrik-crd
+    type: application
+    urls:
+    - https://github.com/fybrik/charts/releases/download/fybrik-crd-1.3.3/fybrik-crd-1.3.3.tgz
+    version: 1.3.3
   - apiVersion: v2
     appVersion: 1.3.2
     created: "2023-03-23T10:01:47.543220664Z"
@@ -663,6 +688,20 @@ entries:
   vault:
   - apiVersion: v2
     appVersion: 1.12.2
+    created: "2023-05-16T09:03:33.044348522Z"
+    dependencies:
+    - name: vault
+      repository: https://helm.releases.hashicorp.com
+      version: 0.23.0
+    description: Vault Helm Chart
+    digest: 186ba5c21680dc1f663ac20514abf10c807da5629c8e3f6918da4c8de1d50cad
+    name: vault
+    type: application
+    urls:
+    - https://github.com/fybrik/charts/releases/download/vault-1.3.3/vault-1.3.3.tgz
+    version: 1.3.3
+  - apiVersion: v2
+    appVersion: 1.12.2
     created: "2023-03-23T10:01:47.863027771Z"
     dependencies:
     - name: vault
@@ -997,4 +1036,4 @@ entries:
     urls:
     - https://github.com/mesh-for-data/charts/releases/download/vault-0.3.1/vault-0.3.1.tgz
     version: 0.3.1
-generated: "2023-03-23T10:01:47.863535581Z"
+generated: "2023-05-16T09:03:33.044758123Z"
